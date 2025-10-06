@@ -26,32 +26,25 @@ $game = new Game($word, 6, $state);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Reiniciar partida sin borrar historial
     if (isset($_POST['reset'])) {
-        // Guardar historial antes de limpiar
         $history = $storage->get('history', []);
 
-        // Limpiar solo estado y palabra
         $storage->set('state', null);
         $storage->set('word', null);
 
-        // Restaurar historial
         $storage->set('history', $history);
 
         header("Location: index.php");
         exit;
     }
 
-    // Procesar letra
     if (isset($_POST['letter'])) {
         $letter = strtoupper(trim($_POST['letter']));
         if ($letter !== '') {
             $game->guessLetter($letter);
 
-            // Guardar estado actual
             $storage->set('state', $game->toState());
 
-            // Si la partida terminó, guardar resumen en historial
             if ($game->isWon() || $game->isLost()) {
                 $history = $storage->get('history', []);
                 $attemptsUsed = count($game->getUsedLetters());
@@ -69,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// utilidad para escapar en HTML
+
 function e($s) {
     return htmlentities((string)$s, ENT_QUOTES, 'UTF-8');
 }
@@ -318,7 +311,7 @@ function e($s) {
             <div>
                 <h1 class="title">
                     <span class="rosette" aria-hidden="true">☩</span>
-                    Ahorcado — La Révolution
+                    Ahorcado en La Révolution
                 </h1>
                 <p class="subtitle">Fuiste sentenciado a muerte. Adivina la palabra para pedir clemencia.</p>
             </div>
