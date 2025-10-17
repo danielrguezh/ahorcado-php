@@ -1,0 +1,10 @@
+casa
+perro
+gato
+montana
+programacion
+php
+ahorcado
+ordenador
+teclado
+pantalla
